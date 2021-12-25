@@ -29,29 +29,26 @@
     }})
 
     const handleDeliver = (id) =>{
-      axios.patch('https://recipetohome-api.herokuapp.com/api/v1/order/'+id,{
+      axios({
+        method:'patch',
+        url:'https://recipetohome-api.herokuapp.com/api/v1/order/'+id,
         headers:{
-          'Authorization':'Bearer ' + user.token,
-          'Content-Type':'application/json',
-          'Accept':'application/json',
-          'Access-Control-Allow-Origin':'*'
+          'Authorization':'Bearer '+user.token,
+          'Content-Type':'application/json'
         }
-      }).then(res=>{
-        console.log(res)
-      }).catch(err=>{
-        console.log(err)
-      })
+      }).then(res=>console.log(res.data)).catch(err=>console.log(err))
     }
 
     const handleCancel = (id) =>{
-      axios.delete('https://recipe-to-home-api.herokuapp.com/api/v1/order/'+id,{
+      axios({
+        method:'delete',
+        url:'https://recipetohome-api.herokuapp.com/api/v1/order/'+id,
         headers:{
-          'Authorization':'Bearer ' + user.token,
+          'Authorization':'Bearer '+user.token,
           'Content-Type':'application/json'
         }
-      }).then(res=>console.log(res.data.order)).catch(err=>console.log(err))
+      }).then(res=>console.log(res.data)).catch(err=>console.log(err))
     }
-
 </script>
 
 <style>

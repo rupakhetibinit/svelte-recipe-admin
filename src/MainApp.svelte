@@ -11,23 +11,24 @@
   const user = JSON.parse(localStorage.getItem('$store'))
   console.log(user,'user')
   import { onMount } from 'svelte';
-  onMount(async () =>{
-   response = await axios.get('https://recipetohome-api.herokuapp.com/api/v1/orders',{
+  onMount(() =>update());
+      async function update() {
+    const res = await axios.get('https://recipetohome-api.herokuapp.com/api/v1/orders',{
       headers:{
         'Authorization':'Bearer '+user.token,
         'Content-Type':'application/json'
       }
     })
-    if(response){
-      console.log(response.data.orders)
-      $orders = response.data.orders
+    if(res){
+      console.log(res.data.orders)
+      $orders = res.data.orders
     }
     else{
       console.log('error')
       $orders = []
       message="Error fetching data"
-    }})
-
+    }
+  }
     const handleDeliver = (id) =>{
       axios({
         method:'patch',
@@ -36,7 +37,7 @@
           'Authorization':'Bearer '+user.token,
           'Content-Type':'application/json'
         }
-      }).then(res=>console.log(res.data)).catch(err=>console.log(err))
+      }).then(res=>console.log(res.data)).catch(err=>console.log(err)).finally(()=>update())
     }
 
     const handleCancel = (id) =>{

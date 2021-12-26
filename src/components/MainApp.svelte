@@ -106,13 +106,8 @@ function generateDateTime(date) {
 }
 </script>
 
-<h1>You are currently logged in as {user.name}</h1>
-
-{#if user.isAdmin == true}
-  <h2>You are an admin</h2>
-{:else}
-  <h2>You do not have permission to edit</h2>
-{/if}
+<h1>Recipe to Home</h1>
+<h2>Admin Panel</h2>
 
 {#if message}
   <p id="message">{message}</p>
@@ -122,105 +117,99 @@ function generateDateTime(date) {
   <Spinner />
 {/if}
 
-{#if $orders}
-  <table>
-    <thead>
-      <tr>
-        <th> Order ID </th>
-        <th> Order Delivered </th>
-        <th>Order Date</th>
-        <th> Order Total </th>
-        <th> Order By</th>
-        <th>Deliver Now</th>
-        <th>Cancel Order</th>
-      </tr>
-    </thead>
-    <tbody>
-      {#each $orders as order}
+{#if user.isAdmin == true}
+  {#if $orders}
+    <table class="content-table">
+      <thead>
         <tr>
-          <td>{order.id.split("-")[0].toUpperCase()}</td>
-          <td>{order.delivered}</td>
-          <td>{generateDateTime(order.createdAt)}</td>
-          <td>{order.total}</td>
-          <td>{order.user.name}</td>
-          <td>
-            {#if order.delivered == false}
-              <button on:click={() => handleDeliver(order.id)}>
-                Deliver Now
-              </button>
-            {:else if order.delivered == true}
-              <button disabled>Delivered</button>
-            {/if}
-          </td>
-          <td>
-            {#if order.delivered == false}
-              <button on:click={() => handleCancel(order.id)}>Cancel</button>
-            {:else if order.delivered == true}
-              <button disabled>Already Delivered</button>
-            {/if}
-          </td>
+          <th> Order ID </th>
+          <th> Order Delivered </th>
+          <th>Order Date</th>
+          <th> Order Total </th>
+          <th> Order By</th>
+          <th>Deliver Now</th>
+          <th>Cancel Order</th>
         </tr>
-      {/each}
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        {#each $orders as order}
+          <tr class="active-row">
+            <td>{order.id.split("-")[0].toUpperCase()}</td>
+            <td style="text-transform: capitalize;letter-spacing:1px"
+              >{order.delivered}</td>
+            <td>{generateDateTime(order.createdAt)}</td>
+            <td>{order.total}</td>
+            <td>{order.user.name}</td>
+            <td>
+              {#if order.delivered == false}
+                <button on:click={() => handleDeliver(order.id)}>
+                  Deliver Now
+                </button>
+              {:else if order.delivered == true}
+                <button disabled>Delivered</button>
+              {/if}
+            </td>
+            <td>
+              {#if order.delivered == false}
+                <button on:click={() => handleCancel(order.id)}>Cancel</button>
+              {:else if order.delivered == true}
+                <button disabled>Already Delivered</button>
+              {/if}
+            </td>
+          </tr>
+        {/each}
+      </tbody>
+    </table>
+  {/if}
+{:else}
+  <p>You are not authorized to view this page</p>
 {/if}
-
-<button type="submit" on:click={onLogout}>LogOut</button>
+<button class="logout" type="submit" on:click={onLogout}>LogOut</button>
 
 <style>
-table {
-  max-width: 100%;
-  border: 0;
-  white-space: nowrap;
+* {
+  font-family: sans-serif; /* Change your font family */
+}
+
+.content-table {
   border-collapse: collapse;
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  border-radius: 4px;
-  table-layout: fixed;
+  margin: 25px 0;
+  font-size: 0.9em;
+  min-width: 400px;
+  border-radius: 5px 5px 0 0;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 
-th {
-  height: 56px;
-  font-family: Roboto, sans-serif;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  font-size: 0.875rem;
-  line-height: 1.375rem;
-  font-weight: 500;
-  letter-spacing: 0.00714em;
-  text-decoration: inherit;
-  text-transform: inherit;
+.content-table thead tr {
+  background-color: #009879;
+  color: #ffffff;
   text-align: left;
-  padding-right: 16px;
-  padding-left: 16px;
+  font-weight: bold;
 }
 
-tbody {
-  font-family: Roboto, sans-serif;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  font-weight: 400;
-  letter-spacing: 0.01786em;
-  text-decoration: inherit;
-  text-transform: inherit;
-}
-tr {
-  height: 52px;
-  border-top-color: rgba(0, 0, 0, 0.12);
-  border-top-width: 1px;
-  border-top-style: solid;
-}
-tr:hover {
-  background-color: rgba(0, 0, 0, 0.04);
+.content-table th,
+.content-table td {
+  padding: 12px 15px;
 }
 
-td {
-  padding-right: 16px;
-  padding-left: 16px;
+.content-table tbody tr {
+  border-bottom: 1px solid #dddddd;
 }
 
-button {
+.content-table tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+.content-table tbody tr:last-of-type {
+  border-bottom: 2px solid #009879;
+}
+
+.content-table tbody tr.active-row {
+  font-weight: bold;
+  color: #009879;
+}
+.logout {
   margin-top: 20px;
 }
 </style>

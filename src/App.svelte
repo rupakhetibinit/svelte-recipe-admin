@@ -14,9 +14,9 @@ import MainApp from "./components/MainApp.svelte";
 
 <style>
 main {
-  text-align: center;
-  padding: 1em;
-  max-width: 500;
-  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 </style>

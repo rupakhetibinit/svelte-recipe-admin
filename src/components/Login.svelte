@@ -40,15 +40,22 @@ const onLogin = () => {
 </script>
 
 <h1>Login Screen</h1>
-<body>
-  <form action={onLogin} method="post">
-    <input bind:value={email} type="text" name="email" placeholder="email" />
-    <input
-      bind:value={password}
-      type="password"
-      name="password"
-      placeholder="Password" />
-    <button on:click|preventDefault={onLogin}
-      >{loading ? "Loading" : "Login"}</button>
-  </form>
-</body>
+
+<form action={onLogin} method="post">
+  <input bind:value={email} type="text" name="email" placeholder="email" />
+  <input
+    bind:value={password}
+    type="password"
+    name="password"
+    placeholder="Password" />
+  <button on:click|preventDefault={onLogin}
+    >{loading ? "Loading" : "Login"}</button>
+</form>
+
+<style>
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+</style>

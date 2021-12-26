@@ -2,6 +2,8 @@
 import { store } from "./auth.js";
 import { orders } from "./orders.js";
 import Spinner from "./Spinner.svelte";
+import moment from "moment";
+
 let message = document.getElementById("message");
 const onLogout = async () => {
   $store = null;
@@ -10,9 +12,10 @@ const onLogout = async () => {
 };
 let loading;
 let colNames;
+
 import axios from "axios";
 const user = JSON.parse(localStorage.getItem("$store"));
-console.log(user, "user");
+// console.log(user, "user");
 import { onMount } from "svelte";
 onMount(() => update());
 async function update() {
@@ -46,7 +49,16 @@ const handleDeliver = async (id) => {
       "Content-Type": "application/json",
     },
   })
-    .then((res) => console.log(res.data))
+    .then((res) => {
+      // console.log(res);
+      if (res.status === 200) {
+        // message = "Order Delivered";
+        console.log("Order Delivered");
+      } else {
+        // message = "Error Delivering Order";
+        console.log("Error Delivering Order");
+      }
+    })
     .catch((err) => console.log(err))
     .finally(() => {
       update();
@@ -89,6 +101,10 @@ const handleCancel = async (id) => {
 //     $orders = $orders.sort(sort);
 //   };
 // };
+
+function generateDateTime(date) {
+  return new Date(date).toISOString().replace(/T/, " ").replace(/\..+/, "");
+}
 </script>
 
 <h1>You are currently logged in as {user.name}</h1>
@@ -123,9 +139,9 @@ const handleCancel = async (id) => {
     <tbody>
       {#each $orders as order}
         <tr>
-          <td>{order.id.split('-')[0].toUpperCase()}</td>
+          <td>{order.id.split("-")[0].toUpperCase()}</td>
           <td>{order.delivered}</td>
-          <td>{order.createdAt}</td>
+          <td>{generateDateTime(order.createdAt)}</td>
           <td>{order.total}</td>
           <td>{order.user.name}</td>
           <td>

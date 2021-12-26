@@ -1,5 +1,5 @@
 <script>
-// Get user from svelte store
+// Get user from svelte store using $store
 import { store } from "./auth.js";
 let password = "";
 let email = "";
@@ -7,13 +7,21 @@ let loading = null;
 import axios from "axios";
 
 const onLogin = () => {
+  if (password.length < 6) {
+    alert("Password must be at least 6 characters long");
+    return;
+  }
+  if (!email.includes("@")) {
+    alert("Enter valid Email");
+    return;
+  }
   axios
     .post("https://recipetohome-api.herokuapp.com/api/auth/login", {
       email: email,
       password: password,
     })
     .then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       $store = {
         token: res.data.accessToken,
         name: res.data.name,
@@ -33,14 +41,14 @@ const onLogin = () => {
 
 <h1>Login Screen</h1>
 <body>
-  <form action="{onLogin}" method="post">
-    <input bind:value="{email}" type="text" name="email" placeholder="email" />
+  <form action={onLogin} method="post">
+    <input bind:value={email} type="text" name="email" placeholder="email" />
     <input
-      bind:value="{password}"
+      bind:value={password}
       type="password"
       name="password"
       placeholder="Password" />
-    <button on:click|preventDefault="{onLogin}"
+    <button on:click|preventDefault={onLogin}
       >{loading ? "Loading" : "Login"}</button>
   </form>
 </body>

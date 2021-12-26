@@ -28,13 +28,15 @@ async function update() {
       },
     }
   );
-  if (res) {
+  if (res && res.data.orders) {
     // console.log(res.data.orders);
     $orders = res.data.orders;
     colNames = Object.keys(res.data.orders[0]);
-  } else {
+  } else if (res) {
     // console.log("error");
-    message = "Error fetching data";
+    message = "";
+  } else {
+    message = "error fetching data";
   }
   loading = false;
 }

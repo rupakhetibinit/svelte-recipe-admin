@@ -1,6 +1,6 @@
 <script>
 // Get user from svelte store using $store
-import { store } from "./auth.js";
+import { store } from "../stores/auth.js";
 let password = "";
 let email = "";
 let loading = null;

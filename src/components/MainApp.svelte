@@ -1,8 +1,7 @@
 <script>
-import { store } from "./auth.js";
-import { orders } from "./orders.js";
+import { store } from "../stores/auth.js";
+import { orders } from "../stores/orders.js";
 import Spinner from "./Spinner.svelte";
-import moment from "moment";
 
 let message = document.getElementById("message");
 const onLogout = async () => {

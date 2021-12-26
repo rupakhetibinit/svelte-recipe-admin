@@ -1,7 +1,7 @@
 <script>
-import Login from "./Login.svelte";
-import { store } from "./auth.js";
-import MainApp from "./MainApp.svelte";
+import Login from "./components/Login.svelte";
+import { store } from "./stores/auth.js";
+import MainApp from "./components/MainApp.svelte";
 </script>
 
 <main>

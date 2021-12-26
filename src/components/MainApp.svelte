@@ -124,11 +124,11 @@ function generateDateTime(date) {
         <tr>
           <th> Order ID </th>
           <th> Order Delivered </th>
-          <th>Order Date</th>
+          <th> Order Date </th>
           <th> Order Total </th>
-          <th> Order By</th>
-          <th>Deliver Now</th>
-          <th>Cancel Order</th>
+          <th> Order By </th>
+          <th> Deliver Now </th>
+          <th> Cancel Order </th>
         </tr>
       </thead>
       <tbody>

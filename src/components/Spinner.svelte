@@ -1,6 +1,6 @@
 <script>
 export let size = 60;
-export let color = "#FF3E00";
+export let color = "#009879";
 export let unit = "px";
 </script>
 

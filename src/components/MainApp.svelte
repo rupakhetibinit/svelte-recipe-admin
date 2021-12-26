@@ -121,9 +121,11 @@ function generateDateTime(date) {
 
 {#if user.isAdmin == true}
   {#if $orders}
+    <p>Showing {$orders.length} orders</p>
     <table class="content-table">
       <thead>
         <tr>
+          <th> S.N. </th>
           <th> Order ID </th>
           <th> Order Delivered </th>
           <th> Order Date </th>
@@ -134,8 +136,9 @@ function generateDateTime(date) {
         </tr>
       </thead>
       <tbody>
-        {#each $orders as order}
+        {#each $orders as order, i}
           <tr class="active-row">
+            <td>{i + 1}.</td>
             <td>{order.id.split("-")[0].toUpperCase()}</td>
             <td style="text-transform: capitalize;letter-spacing:1px"
               >{order.delivered}</td>

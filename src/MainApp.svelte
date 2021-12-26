@@ -123,7 +123,7 @@ const handleCancel = async (id) => {
     <tbody>
       {#each $orders as order}
         <tr>
-          <td>{order.id}</td>
+          <td>{order.id.split('-').toUpperCase()}</td>
           <td>{order.delivered}</td>
           <td>{order.createdAt}</td>
           <td>{order.total}</td>

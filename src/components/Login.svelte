@@ -39,7 +39,8 @@ const onLogin = () => {
       localStorage.setItem("$store", JSON.stringify($store));
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
+      error.password = "Email or password is incorrect";
     })
     .finally(() => {
       loading = false;

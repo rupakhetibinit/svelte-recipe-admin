@@ -4,19 +4,17 @@ import { orders } from "../stores/orders.js";
 import Spinner from "./Spinner.svelte";
 
 let message = document.getElementById("message");
-const onLogout = async () => {
-  $store = null;
-  localStorage.clear();
-  location.reload();
-};
+
 let loading;
 let colNames;
 
 import axios from "axios";
 const user = JSON.parse(localStorage.getItem("$store"));
+
 // console.log(user, "user");
-import { onMount } from "svelte";
-onMount(() => update());
+$: if ($orders === null) {
+  update();
+}
 async function update() {
   loading = true;
   const res = await axios.get(
@@ -108,9 +106,6 @@ function generateDateTime(date) {
 }
 </script>
 
-<h1>Recipe to Home</h1>
-<h2>Admin Panel</h2>
-
 {#if message}
   <p id="message">{message}</p>
 {/if}
@@ -136,7 +131,7 @@ function generateDateTime(date) {
         </tr>
       </thead>
       <tbody>
-        {#each $orders as order, i}
+        {#each $orders as order, i (order.id)}
           <tr class="active-row">
             <td>{i + 1}.</td>
             <td>{order.id.split("-")[0].toUpperCase()}</td>
@@ -169,7 +164,6 @@ function generateDateTime(date) {
 {:else}
   <p>You are not authorized to view this page</p>
 {/if}
-<button class="logout" type="submit" on:click={onLogout}>LogOut</button>
 
 <style>
 * {
@@ -213,8 +207,5 @@ function generateDateTime(date) {
 .content-table tbody tr.active-row {
   font-weight: bold;
   color: #009879;
-}
-.logout {
-  margin-top: 20px;
 }
 </style>

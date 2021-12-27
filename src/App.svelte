@@ -1,14 +1,37 @@
 <script>
 import Login from "./components/Login.svelte";
 import { store } from "./stores/auth.js";
-import MainApp from "./components/MainApp.svelte";
+
+import Tabs from "./components/Tabs.svelte";
+import Orders from "./components/Orders.svelte";
+import Users from "./components/Users.svelte";
+let items = [
+  {
+    label: "Orders",
+    value: 1,
+    component: Orders,
+  },
+  {
+    label: "Users",
+    value: 2,
+    component: Users,
+  },
+];
+const onLogout = async () => {
+  $store = null;
+  localStorage.clear();
+  location.reload();
+};
+const user = JSON.parse(localStorage.getItem("$store"));
 </script>
 
 <main>
-  {#if $store == null && localStorage.getItem("$store") == null}
+  {#if $store == null && user == null}
     <Login />
   {:else}
-    <MainApp />
+    <h2>Recipe to Home Admin Panel</h2>
+    <Tabs items={items} />
+    <button class="logout" type="submit" on:click={onLogout}>LogOut</button>
   {/if}
 </main>
 
@@ -18,5 +41,8 @@ main {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+}
+.logout {
+  margin-top: 20px;
 }
 </style>

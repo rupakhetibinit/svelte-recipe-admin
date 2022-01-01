@@ -27,9 +27,13 @@ async function update() {
     }
   );
   if (res && res.data.orders) {
-    // console.log(res.data.orders);
-    $orders = res.data.orders;
-    colNames = Object.keys(res.data.orders[0]);
+    if (res.data.orders === null) {
+      message = "failed to load orders";
+    } else {
+      // console.log(res.data.orders);
+      $orders = res.data.orders;
+    }
+    // colNames = Object.keys(res.data.orders[0]);
   } else if (res) {
     // console.log("error");
     message = "";

@@ -23,6 +23,7 @@
     "@rollup/plugin-json": "^4.1.0",
     "axios": "0.21.1",
     "cloudinary": "^1.27.1",
-    "sirv-cli": "^1.0.0"
+    "sirv-cli": "^1.0.0",
+    "svelte-select": "^4.4.7"
   }
 }

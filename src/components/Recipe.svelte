@@ -224,7 +224,7 @@ const handleAddToDatabase = () => {
       placeholder="Measurement"
       type="text" />
     <input bind:value={ingredient.amount} placeholder="Amount" type="number" />
-    <input bind:value={ingredient.price} placeholder="Price" type="text" />
+    <input bind:value={ingredient.price} placeholder="Price" type="number" />
     <p>****************************************</p>
   {/each}
 

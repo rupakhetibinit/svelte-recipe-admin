@@ -6,6 +6,7 @@ import Tabs from "./components/Tabs.svelte";
 import Orders from "./components/Orders.svelte";
 import Users from "./components/Users.svelte";
 import Recipe from "./components/Recipe.svelte";
+import Wallet from "./components/Wallet.svelte";
 let items = [
   {
     label: "Orders",
@@ -21,6 +22,11 @@ let items = [
     label: "Add Recipes",
     value: 3,
     component: Recipe,
+  },
+  {
+    label: "Add Money",
+    value: 4,
+    component: Wallet,
   },
 ];
 const onLogout = async () => {

@@ -1,5 +1,6 @@
 <script>
 import axios from "axios";
+import { onMount } from "svelte";
 import Select from "svelte-select";
 import { users } from "../stores/users";
 let newUsers;
@@ -15,9 +16,15 @@ const config = {
   },
 };
 
+$: setInterval(() => {
+  message = "";
+}, 5000);
+
+onMount(update);
 $: if ($users === null) {
   update();
 }
+
 function handleWalletAdd() {
   loading = true;
   console.log(selectedUser);
@@ -32,7 +39,7 @@ function handleWalletAdd() {
     )
     .then((res) => {
       console.log(res.data);
-      // message = `Wallet loaded to user ${res.data.user.name}`;
+      message = `Wallet loaded to user ${res.data.user.name}`;
     })
     .catch((err) => {
       console.log(err);
@@ -79,20 +86,24 @@ async function update() {
 <h1>Add Money to users</h1>
 
 <!--Creating a dropdown with all users -->
-<form on:submit|preventDefault={handleWalletAdd}>
-  {#if $users}
-    <Select
-      items={newUsers}
-      bind:value={selectedUser}
-      on:select={(event) => (selectedUser = event.detail)} />
-    <input bind:value={wallet} type="number" required />
+{#if user.isAdmin === true}
+  <form on:submit|preventDefault={handleWalletAdd}>
+    {#if $users}
+      <Select
+        items={newUsers}
+        bind:value={selectedUser}
+        on:select={(event) => (selectedUser = event.detail)} />
+      <input bind:value={wallet} type="number" required />
 
-    <button disabled={loading} type="submit"> Submit </button>
-    {#if message}
-      <p>{message}</p>
+      <button disabled={loading} type="submit"> Submit </button>
+      {#if message}
+        <p>{message}</p>
+      {/if}
     {/if}
-  {/if}
-</form>
+  </form>
+{:else}
+  <p>You are not an admin</p>
+{/if}
 
 <style>
 </style>
